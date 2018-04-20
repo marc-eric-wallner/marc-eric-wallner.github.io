@@ -1,0 +1,346 @@
+*{
+    font: 20px/20px 'Oswald';
+}
+body {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.background{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/game.jpg');
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+
+.game-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+header{
+    position: relative;
+    width: 100%;
+}
+
+.title-img-wrapper{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.title-img{
+    position: relative;
+    display: inline-block;
+    background-image: url('../img/h1.png');
+    background-repeat:no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 7rem;
+    width: 100%;
+    max-width: 23rem;
+}
+
+.game-title{
+    text-align: center;
+    font-size: 2.2rem;
+    color: #ffffff;
+    line-height: 2.5rem;
+}
+
+section{
+    position: relative;
+    height: 8rem;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+}
+section .container{
+    position: relative;
+    display: inline-block;
+    height: 8rem;
+    width: 100%;
+    max-width: 32rem;
+    white-space: normal;
+}
+
+section .container .box{
+    position: relative;
+    display: inline-block;
+    width: 8rem;
+    height: 8rem;
+    box-sizing: border-box;
+    vertical-align: top;
+    color: #ffffff;
+}
+
+@media (max-width: 41rem){
+
+    section .container .box{
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .box h3, .box p, .box button{
+        font-size: 0.9rem!important;
+    }
+
+    .rate-star{
+        height: 0.9rem;
+        width: 0.9rem;
+    }
+}
+
+#greeting{
+    position: absolute;
+    width: 20rem;
+    height: 6rem;
+    top: 50%;
+    left: 50%;
+    margin: -3rem 0 0 -10rem;
+    vertical-align: midddle;
+    background: rgba(0,0,0,0.9);
+    overflow: hidden;
+    color: #fff;
+    display: block;
+    text-align: center;
+    font: 30px/30px 'Oswald';
+    color: #ffffff;
+}
+@media (max-width: 26rem){
+    #greeting{
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+        height: 7rem;
+        margin-top: -3.5rem;
+    }
+
+    .game-title{
+        font-size: 1.5rem;
+        line-height: 0rem;
+    }
+
+    #score-panel{
+        height: 6rem;
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 20rem){
+    #greeting{
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+        height: 7rem;
+        margin-top: -3.5rem;
+    }
+
+    .game-title{
+        font-size: 1.2rem;
+        line-height: 0rem;
+    }
+
+    #score-panel{
+        height: 5rem;
+        margin-top: 0.5rem;
+    }
+
+    section .container .box{
+        width: 3.3rem;
+        height: 4rem;
+    }
+
+    .title-img{
+        height: 6rem;
+    }
+}
+
+@media (max-width: 48rem){
+    #score-panel{
+        height: 6rem;
+    }
+}
+
+#results{
+    position: absolute;
+    width: 20rem;
+    height: 13rem;
+    top: 50%;
+    left: 50%;
+    margin: -6.5rem 0 0 -10rem;
+    vertical-align: midddle;
+    background: rgba(0,0,0,0.9);
+    overflow: hidden;
+    color: #fff;
+    display: block;
+    text-align: center;
+    font: 30px/30px 'Oswald';
+    color: #ffffff;
+    text-align: left;
+}
+
+#results p{
+    padding: 0.05rem 1rem;
+}
+
+.result-criteria{
+    display: inline-block;
+    width: 7rem;
+  }
+
+@media (max-width: 26rem){
+    #results{
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+        height: 15rem;
+        margin-top: -7.5rem;
+    }
+}
+
+
+/*Rates*/
+.rate-holder{
+    white-space: nowrap;
+    padding: 0;
+    margin: 0.4rem;
+}
+.restart-holder{
+  white-space: nowrap;
+}
+
+.rate-star{
+    display: inline-block;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-image: url('../img/chicken.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (max-width: 41rem){
+    .rate-star{
+        height: 0.9rem;
+        width: 0.9rem;
+    }
+}
+
+/*
+ * Styles for the deck of cards
+ */
+
+ .deck {
+    width: 30rem;
+    min-height: 30rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+  }
+  
+  .deck .card {
+    height: 7rem;
+    width: 7rem;
+    background: #ffffff;
+    background-image: url('../img/air.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:80%;
+    font-size: 0;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    transition: all ease-in-out 150ms;
+  }
+
+@media (max-width: 44rem){
+    .deck {
+        width: 24rem;
+        min-height: 24rem;
+    }
+    .deck .card {
+        height: 5rem;
+        width: 5rem;
+    }
+}
+
+@media (max-width: 34rem){
+    .deck {
+        width: 18rem;
+        min-height: 18rem;
+        padding: 0;
+    }
+    .deck .card {
+        height: 4rem;
+        width: 4rem;
+    }
+}
+
+@media (max-width: 23rem){
+    .deck {
+        width: 15rem;
+        min-height: 15rem;
+        padding: 0;
+    }
+    .deck .card {
+        height: 3.5rem;
+        width: 3.5rem;
+    }
+}
+@media (max-width: 18rem){
+    .deck {
+        width: 12rem;
+        min-height: 12rem;
+        padding: 0;
+    }
+    .deck .card {
+        height: 3rem;
+        width: 3rem;
+    }
+}
+
+
+/*Common stuff*/
+button{
+    background: #000000;
+    border-radius: 10px;
+    color: #fff;
+    display: block;
+    font: 20px/20px 'Oswald';
+    text-align: center;
+    color: #ffffff;
+    margin: auto;
+    padding: 10px 20px;
+    outline: none;
+}
+
+button:hover{
+    background: #FAF102;
+    border-radius: 10px;
+    display: block;
+    font: 20px/20px 'Oswald';
+    color: #000000;
+    margin: auto;
+    padding: 10px 20px;
+}

@@ -1,0 +1,71 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PUBG Memory</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Udacity Project">
+    <meta name="author" content="Marc Eric Wallner">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="background">
+    </div>
+
+    <div class="game-container">
+        <header>
+            <div class="title-img-wrapper">
+                <div class="title-img"> </div>
+            </div>
+            <h1 class="game-title">AIR DROP MEMORY GAME</h2>
+            <section id="score-panel">
+                <div class="container">
+                    <div class="box">
+                        <div class="box-content">
+                            <p id="turns-counter"></p>
+                            <h3>Moves</h3>
+                        </div>
+                    </div><div class="box">
+                        <div class="box-content">
+                            <p id="time-counter"></p>
+                            <h3>Timer</h3>
+                        </div>
+                    </div><div class="box">
+                        <div class="box-content">
+                            <p class="rate-holder" id="success-counter"></p>
+                            <h3>Dinner Rating</h3>
+                        </div>
+                    </div><div class="box">
+                        <div class="box-content">
+                            <button id="restart-game-button">Restart Game</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <div>
+            <ul class="deck" id="desk">
+                    <!--Cells added dynimically-->
+            </ul>
+        </div>
+
+        <div id="greeting" class="center-modal greeting">
+            <p>Ready to get that coveted chicken dinner?</p>
+            <button id="new-game-button">Play</button>
+        </div>
+        <div id="results" class="center-modal results">
+            <p>Winner Winner Chicken Dinner</p>
+            <p ><span class="result-criteria">Moves:</span> <span id="res-moves"></span></p>
+            <p ><span class="result-criteria">Time:</span> <span id="res-time"></span></p>
+            <p ><span class="result-criteria">Rating:</span> <span id="res-rate"></span></p>
+            <button id="repeat-game-button">Repeat Game</button>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+    </body>
+</html>
