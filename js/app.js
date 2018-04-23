@@ -21,6 +21,7 @@ const SETTINGS = {
 class Card {
 
     constructor(onChangeState, canBeOpened){
+        this.id             = Math.random();
         this.state          = STATES.closed;
         this.node           = null;
         this.image          = null;
@@ -73,6 +74,7 @@ class Card {
                 break;
         }
         this.onChangeState({
+            id      : this.id,
             state   : this.state,
             image   : this.image,
             instance: this
@@ -195,6 +197,7 @@ class Rating {
 class TimerCounter{
 
     constructor() {
+        this.started = (new Date()).getTime();
         this.seconds = 0;
         this.node = document.querySelector('#time-counter');
         if (this.node === null){
@@ -204,22 +207,28 @@ class TimerCounter{
     }
 
     next(){
-        this.seconds += 1;
         this._update();
-        setTimeout(this.next.bind(this), 1000);
+        setTimeout(this.next.bind(this), 50);
     }
 
     _update(){
-        const minutes = Math.floor(this.seconds / 60);
-        const seconds = this.seconds % 60;
+        const now       = (new Date()).getTime();
+        const duration  = now - this.started;
+        const ms        = (duration % 1000);
+        const sec       = ((duration - ms) / 1000) % 60;
+        const min       = Math.floor(((duration - ms) / 1000 - sec) / 60);
+
         this.node.innerHTML = 
-            (minutes > 9 ? minutes : ('0' + minutes)) +
+            (min > 9 ? min : ('0' + min)) +
             ':' +
-            (seconds > 9 ? seconds : ('0' + seconds));
+            (sec > 9 ? sec : ('0' + sec)) + 
+            ':' +
+            (ms > 9 ? (ms > 99 ? ms : ('0' + ms)) : ('00' + ms));
     }
 
     reset(){
         this.seconds = 0;
+        this.started = (new Date()).getTime();
     }
 
 }
@@ -293,7 +302,7 @@ class Desk {
         return this.opened.length >= 2 ? false : true;
     }
 
-    isCardOpened(img){
+    isCardOpened(img) {
         let results = false;
         this.opened.forEach((card) => {
             if (card.image === img) {
@@ -303,12 +312,20 @@ class Desk {
         return results;
     }
 
+    getCardById(id) {
+        let results = null;
+        this.opened.forEach((card) => {
+            if (card.id === id) {
+                results = card;
+            }
+        });
+        return results;
+    }
+
     onCardChanged(params){
         //===DEBUG MODE=============
         //this.onFinish();
         //===DEBUG MODE=============
-        this.turnsCounter.up();
-        this.rating.update(this.turnsCounter.count, this.timerCounter.seconds);
         if (this.opened.length === 0){
             //No opened cards
             if (params.state === STATES.opened){
@@ -316,10 +333,17 @@ class Desk {
             }
             return true;
         }
-        if (this.opened.length > 0){
-            if (params.state !== STATES.opened){
+        if (this.opened.length === 1){
+            //Some card is already opened
+            if (this.getCardById(params.id) && params.state !== STATES.opened){
+                //Is it already opened card. Remove it
+                this.opened.splice(0, 1);
                 return true;
             }
+            //Count turn
+            this.turnsCounter.up();
+            this.rating.update(this.turnsCounter.count, this.timerCounter.seconds);
+            //Check results
             if (this.isCardOpened(params.image) === true){
                 //If we have a match. Do nothing
                 this.opened.push(params);
