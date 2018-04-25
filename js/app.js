@@ -198,15 +198,20 @@ class TimerCounter{
 
     constructor() {
         this.started = (new Date()).getTime();
-        this.seconds = 0;
+        this.duration = 0;
         this.node = document.querySelector('#time-counter');
+        this.stopped = true;
         if (this.node === null){
             throw new Error(`Check your HTML, cannot find node #time-counter`);
         }
+        this._resetView();
         this.next();
     }
 
     next(){
+        if (this.stopped){
+            return;
+        }
         this._update();
         setTimeout(this.next.bind(this), 50);
     }
@@ -217,7 +222,7 @@ class TimerCounter{
         const ms        = (duration % 1000);
         const sec       = ((duration - ms) / 1000) % 60;
         const min       = Math.floor(((duration - ms) / 1000 - sec) / 60);
-
+        this.duration   = duration;
         this.node.innerHTML = 
             (min > 9 ? min : ('0' + min)) +
             ':' +
@@ -226,9 +231,26 @@ class TimerCounter{
             (ms > 9 ? (ms > 99 ? ms : ('0' + ms)) : ('00' + ms));
     }
 
+    _resetView(){
+        this.node.innerHTML = '00:00:000';
+    }
+
     reset(){
-        this.seconds = 0;
         this.started = (new Date()).getTime();
+    }
+
+    start(){
+        if (!this.stopped) {
+            return false;
+        }
+        this.stopped = false;
+        this.started = (new Date()).getTime();
+        this.next();
+    }
+
+    stop(){
+        this._resetView();
+        this.stopped = true;
     }
 
 }
@@ -324,8 +346,10 @@ class Desk {
 
     onCardChanged(params){
         //===DEBUG MODE=============
+        //this.timerCounter.stop();
         //this.onFinish();
         //===DEBUG MODE=============
+        this.timerCounter.start();
         if (this.opened.length === 0){
             //No opened cards
             if (params.state === STATES.opened){
@@ -342,7 +366,7 @@ class Desk {
             }
             //Count turn
             this.turnsCounter.up();
-            this.rating.update(this.turnsCounter.count, this.timerCounter.seconds);
+            this.rating.update(this.turnsCounter.count, this.timerCounter.duration);
             //Check results
             if (this.isCardOpened(params.image) === true){
                 //If we have a match. Do nothing
@@ -351,6 +375,7 @@ class Desk {
                 this.matchs += 1;
                 if (this.matchs === 8){
                     //It's victory
+                    this.timerCounter.stop();
                     this.onFinish();
                 }
             } else {
@@ -392,9 +417,9 @@ class Desk {
 
     getResults(){
         return {
-            moves   : this.turnsCounter.count,
-            seconds : this.timerCounter.seconds,
-            rate    : this.rating.rate
+            moves       : this.turnsCounter.count,
+            duration    : this.timerCounter.duration,
+            rate        : this.rating.rate
         }
     }
 
@@ -490,12 +515,16 @@ class ResultsDialog {
         node = document.querySelector('#res-moves');    
         node.innerHTML = results.moves;
         node = document.querySelector('#res-time');
-        const minutes = Math.floor(results.seconds / 60);
-        const seconds = results.seconds % 60;
+        const duration  = results.duration;
+        const ms        = (duration % 1000);
+        const sec       = ((duration - ms) / 1000) % 60;
+        const min       = Math.floor(((duration - ms) / 1000 - sec) / 60);
         node.innerHTML = 
-            (minutes > 9 ? minutes : ('0' + minutes)) +
+            (min > 9 ? min : ('0' + min)) +
             ':' +
-            (seconds > 9 ? seconds : ('0' + seconds));
+            (sec > 9 ? sec : ('0' + sec)) + 
+            ':' +
+            (ms > 9 ? (ms > 99 ? ms : ('0' + ms)) : ('00' + ms));
         node = document.querySelector('#res-rate');
         node.innerHTML = '';
         //Add stars to rate-node
